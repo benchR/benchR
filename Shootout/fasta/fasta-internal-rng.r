@@ -38,7 +38,7 @@ repeatFasta <- function(s, n, ll = LINE_LENGTH) {
     writtenInLine <- 0L
 
     while(n > 0L) {
-        # wieviele zeichen schreiben?
+        # How many letters to write?
         nwrite <- min(slen - pos, n, ll - writtenInLine)
         cat(substr(s, pos + 1L, pos + nwrite))
 

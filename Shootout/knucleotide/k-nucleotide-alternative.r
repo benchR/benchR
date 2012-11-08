@@ -7,7 +7,7 @@
 # ------------------------------------------------------------------
 
 input <- as.character(commandArgs(trailingOnly = TRUE)[1])
-if(is.na(input)) input <- "../../Fasta/fasta_out_5000000.txt"
+if(is.na(input)) input <- "fasta_out_5000000.txt"
 lines <- readLines(input)
 
 seq_startpoints <- which(substr(lines, 1L, 1L) == ">")
