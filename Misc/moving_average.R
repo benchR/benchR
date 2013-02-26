@@ -1,3 +1,6 @@
+# ------------------------------------------------------------------
+# Contributed by Michel Lang, TU Dortmund
+# ------------------------------------------------------------------
 ### Exemplary moving median on a time series
 # Moving averages are used to smooth time series and reduce the noise.
 

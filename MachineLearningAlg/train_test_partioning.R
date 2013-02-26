@@ -1,3 +1,7 @@
+# ------------------------------------------------------------------
+# Contributed by Michel Lang, TU Dortmund
+# ------------------------------------------------------------------
+
 ### Partition a matrix/data.frame into test and training subsets
 # Widely used in machine learning applications because an independent
 # test set is required to validate algorithms without being over optimistic

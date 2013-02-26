@@ -1,3 +1,7 @@
+# ------------------------------------------------------------------
+# Contributed by Michel Lang, TU Dortmund
+# ------------------------------------------------------------------
+
 library(penalized)
 
 n <- 200L # number of observations

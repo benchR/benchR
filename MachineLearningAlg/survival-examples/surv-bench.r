@@ -1,3 +1,7 @@
+# ------------------------------------------------------------------
+# Contributed by Michel Lang, TU Dortmund
+# ------------------------------------------------------------------
+
 getSimulatedData <- function(n = 200L, p = 100L) {
   set.seed(20120222)
   x <- matrix(rnorm(n * p), n, p)

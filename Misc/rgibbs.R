@@ -1,3 +1,6 @@
+# ------------------------------------------------------------------
+# Contributed by Michel Lang, TU Dortmund
+# ------------------------------------------------------------------
 # Code from https://github.com/fonnesbeck/useRshootout/blob/master/R/simplegibbs.R
 # Obtain a sequence of random samples from multivariate probability distribution
 # http://en.wikipedia.org/wiki/Gibbs_sampling

@@ -1,3 +1,7 @@
+# ------------------------------------------------------------------
+# Contributed by Michel Lang, TU Dortmund
+# ------------------------------------------------------------------
+
 ### Exemplary variance filter on a big matrix
 # Sometimes used in gene expression analysis to pre-filter the
 # number of covariates. Only top N covariates are kept for further

@@ -1,3 +1,6 @@
+# ------------------------------------------------------------------
+# Contributed by Michel Lang, TU Dortmund
+# ------------------------------------------------------------------
 ### Test R's IO
 # General loading and saving of files
 
