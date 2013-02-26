@@ -1,3 +1,9 @@
+# ------------------------------------------------------------------
+# Contributed by Michel Lang, TU Dortmund
+# ------------------------------------------------------------------
+# Linear discriminant analysis using the klaR package with default parameters
+# USEAGE: Rscript [scriptfile] [problem-number] [number of replications]
+# Output: Misclassification rate
 library(klaR)
 type <- "classification"
 
@@ -9,6 +15,12 @@ if (length(args)) {
 
 load(file.path("problems", sprintf("%s_%02i.RData", type, num)))
 
+mcrs <- numeric(repls)
 for (repl in seq_len(repls)) {
-  mod <- rda(y ~ ., data = problem, lambda = 1, gamma = 0)
+  set.seed(repl)
+  train <- sample(nrow(problem)) < floor(2/3 * nrow(problem))
+  mod <- rda(y ~ ., data = problem[train, ], lambda = 1, gamma = 0)
+  predicted <- predict(mod, problem[!train, ])$class
+  mcrs[repl] <- mean(problem$y[!train] == predicted)
 }
+message(round(mean(mcrs), 4))

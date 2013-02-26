@@ -1,10 +1,10 @@
 # ------------------------------------------------------------------
 # Contributed by Michel Lang, TU Dortmund
 # ------------------------------------------------------------------
-# SVM classification (radient kernel) using the e1071 package with default parameters
+# L1-penalized logistic regression using the glmnet package with default parameters
 # USEAGE: Rscript [scriptfile] [problem-number] [number of replications]
 # Output: Misclassification rate
-library(e1071)
+library(glmnet)
 type <- "classification"
 
 args <- commandArgs(TRUE)
@@ -19,8 +19,8 @@ mcrs <- numeric(repls)
 for (repl in seq_len(repls)) {
   set.seed(repl)
   train <- sample(nrow(problem)) < floor(2/3 * nrow(problem))
-  mod <- svm(y ~ ., data = problem[train, ])
-  predicted <- predict(mod, problem[!train, ], type="class")
+  mod <- cv.glmnet(x = as.matrix(subset(problem, train, select=-y)), y = problem$y[train], family="binomial")
+  predicted = predict(mod, newx = as.matrix(subset(problem, !train, select=-y)), type="class")
   mcrs[repl] <- mean(problem$y[!train] == predicted)
 }
 message(round(mean(mcrs), 4))

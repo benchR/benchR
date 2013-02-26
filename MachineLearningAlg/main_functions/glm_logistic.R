@@ -1,10 +1,10 @@
 # ------------------------------------------------------------------
 # Contributed by Michel Lang, TU Dortmund
 # ------------------------------------------------------------------
-# SVM classification (radient kernel) using the e1071 package with default parameters
+# Logistic regression (as generalized linear model) using the stats package
 # USEAGE: Rscript [scriptfile] [problem-number] [number of replications]
 # Output: Misclassification rate
-library(e1071)
+library(stats)
 type <- "classification"
 
 args <- commandArgs(TRUE)
@@ -19,8 +19,8 @@ mcrs <- numeric(repls)
 for (repl in seq_len(repls)) {
   set.seed(repl)
   train <- sample(nrow(problem)) < floor(2/3 * nrow(problem))
-  mod <- svm(y ~ ., data = problem[train, ])
-  predicted <- predict(mod, problem[!train, ], type="class")
+  mod <- glm(y ~ ., data = problem[train, ], family=binomial())
+  predicted = c("a", "b")[(predict(mod, problem[!train, ], type = "response") > 0.5) + 1]
   mcrs[repl] <- mean(problem$y[!train] == predicted)
 }
 message(round(mean(mcrs), 4))

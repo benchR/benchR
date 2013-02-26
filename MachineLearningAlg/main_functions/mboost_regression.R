@@ -1,11 +1,11 @@
 # ------------------------------------------------------------------
 # Contributed by Michel Lang, TU Dortmund
 # ------------------------------------------------------------------
-# SVM classification (radient kernel) using the e1071 package with default parameters
+# Gradient based boosted regression using the mboost package with default parameters
 # USEAGE: Rscript [scriptfile] [problem-number] [number of replications]
-# Output: Misclassification rate
-library(e1071)
-type <- "classification"
+# Output: unadjusted R^2
+library(mboost)
+type <- "regression"
 
 args <- commandArgs(TRUE)
 if (length(args)) {
@@ -15,12 +15,13 @@ if (length(args)) {
 
 load(file.path("problems", sprintf("%s_%02i.RData", type, num)))
 
-mcrs <- numeric(repls)
+R2 <- numeric(repls)
 for (repl in seq_len(repls)) {
   set.seed(repl)
   train <- sample(nrow(problem)) < floor(2/3 * nrow(problem))
-  mod <- svm(y ~ ., data = problem[train, ])
-  predicted <- predict(mod, problem[!train, ], type="class")
-  mcrs[repl] <- mean(problem$y[!train] == predicted)
+  mod <- mboost(y ~ ., data = problem[train, ])
+  y <- problem[!train, "y"]
+  y.hat <- predict(mod, problem[!train, ])
+  R2[repl] <- 1 - sum((y - y.hat)^2) / sum((y - mean(y))^2)
 }
-message(round(mean(mcrs), 4))
+message(round(mean(R2), 4))

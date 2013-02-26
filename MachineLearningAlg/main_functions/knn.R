@@ -1,6 +1,12 @@
+# ------------------------------------------------------------------
+# Contributed by Michel Lang, TU Dortmund
+# ------------------------------------------------------------------
+# K-nearest-neighbor classification using the class package with default parameters
+# USEAGE: Rscript [scriptfile] [problem-number] [number of replications]
+# Output: Misclassification rate
+# FIXME -DOES NOT WORK WITH FACTORS-
 library(class)
 type <- "classification"
-# DOES NOT WORK WITH FACTORS
 
 args <- commandArgs(TRUE)
 if (length(args)) {

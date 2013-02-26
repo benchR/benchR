@@ -1,3 +1,9 @@
+# ------------------------------------------------------------------
+# Contributed by Michel Lang, TU Dortmund
+# ------------------------------------------------------------------
+# Random forest classification using the randomForest package with default parameters
+# USEAGE: Rscript [scriptfile] [problem-number] [number of replications]
+# Output: Misclassification rate
 library(randomForest)
 type <- "classification"
 

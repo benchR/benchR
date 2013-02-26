@@ -1,11 +1,11 @@
 # ------------------------------------------------------------------
 # Contributed by Michel Lang, TU Dortmund
 # ------------------------------------------------------------------
-# SVM classification (radient kernel) using the e1071 package with default parameters
+# L1-penalized linear regression using the penalized package with default parameters
 # USEAGE: Rscript [scriptfile] [problem-number] [number of replications]
-# Output: Misclassification rate
-library(e1071)
-type <- "classification"
+# Output: unadjusted R^2
+library(penalized)
+type <- "regression"
 
 args <- commandArgs(TRUE)
 if (length(args)) {
@@ -15,12 +15,13 @@ if (length(args)) {
 
 load(file.path("problems", sprintf("%s_%02i.RData", type, num)))
 
-mcrs <- numeric(repls)
+R2 <- numeric(repls)
 for (repl in seq_len(repls)) {
   set.seed(repl)
   train <- sample(nrow(problem)) < floor(2/3 * nrow(problem))
-  mod <- svm(y ~ ., data = problem[train, ])
-  predicted <- predict(mod, problem[!train, ], type="class")
-  mcrs[repl] <- mean(problem$y[!train] == predicted)
+  mod <- optL1(problem$y[train], penalized = as.matrix(subset(problem, train, select=-y)), model="linear")
+  y <- problem[!train, "y"]
+  y.hat <- predict(mod$fullfit, as.matrix(subset(problem, !train, select=-y)))[, 1]
+  R2[repl] <- 1 - sum((y - y.hat)^2) / sum((y - mean(y))^2)
 }
-message(round(mean(mcrs), 4))
+message(round(mean(R2), 4))

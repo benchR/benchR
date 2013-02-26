@@ -1,3 +1,9 @@
+# ------------------------------------------------------------------
+# Contributed by Michel Lang, TU Dortmund
+# ------------------------------------------------------------------
+# Simple linear regression using the stats package with default parameters
+# USEAGE: Rscript [scriptfile] [problem-number] [number of replications]
+# Output: unadjusted R^2
 library(stats)
 type <- "regression"
 
@@ -9,6 +15,13 @@ if (length(args)) {
 
 load(file.path("problems", sprintf("%s_%02i.RData", type, num)))
 
+R2 <- numeric(repls)
 for (repl in seq_len(repls)) {
-  mod <- lm(y ~ ., data = problem)
+  set.seed(repl)
+  train <- sample(nrow(problem)) < floor(2/3 * nrow(problem))
+  mod <- lm(y ~ ., data = problem[train, ])
+  y <- problem[!train, "y"]
+  y.hat <- predict(mod, problem[!train, ])
+  R2[repl] <- 1 - sum((y - y.hat)^2) / sum((y - mean(y))^2)
 }
+message(round(mean(R2), 4))

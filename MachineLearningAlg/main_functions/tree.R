@@ -1,3 +1,9 @@
+# ------------------------------------------------------------------
+# Contributed by Michel Lang, TU Dortmund
+# ------------------------------------------------------------------
+# Decision tree classification using the rpart package with default parameters
+# USEAGE: Rscript [scriptfile] [problem-number] [number of replications]
+# Output: Misclassification rate
 library(rpart)
 type <- "classification"
 

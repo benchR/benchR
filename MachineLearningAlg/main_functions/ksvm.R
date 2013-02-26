@@ -1,3 +1,9 @@
+# ------------------------------------------------------------------
+# Contributed by Michel Lang, TU Dortmund
+# ------------------------------------------------------------------
+# SVM classification (RBF kernel) using the kernlab package with default parameters
+# USEAGE: Rscript [scriptfile] [problem-number] [number of replications]
+# Output: Misclassification rate
 library(kernlab)
 type <- "classification"
 
